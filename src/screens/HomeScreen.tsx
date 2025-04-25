@@ -11,6 +11,7 @@ import theme from '../styles/theme';
 import { Appointment } from '../types/appointments';
 import { Doctor } from '../types/doctors';
 import { RootStackParamList } from '../types/navigation';
+
 type HomeScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Home'>;
 };
