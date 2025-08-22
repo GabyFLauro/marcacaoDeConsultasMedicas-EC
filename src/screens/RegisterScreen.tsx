@@ -12,6 +12,9 @@ type RegisterScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Register'>;
 };
 
+// ADICIONAR estado para tipo de usuário
+const [userType, setUserType] = useState<'PACIENTE' | 'ADMIN'>('PACIENTE');
+
 const RegisterScreen: React.FC = () => {
   const { register } = useAuth();
   const navigation = useNavigation<RegisterScreenProps['navigation']>();
@@ -31,11 +34,13 @@ const RegisterScreen: React.FC = () => {
         return;
       }
 
+      // MODIFICAR função handleRegister
       await register({
-        name,
-        email,
-        password,
-      });
+      name,
+      email,
+      password,
+      userType, // NOVO - Envia tipo de usuário
+    });
 
       // Após o registro bem-sucedido, navega para o login
       navigation.navigate('Login');
@@ -77,6 +82,8 @@ const RegisterScreen: React.FC = () => {
 
       {error ? <ErrorText>{error}</ErrorText> : null}
 
+      
+
       <Button
         title="Cadastrar"
         onPress={handleRegister}
@@ -92,6 +99,8 @@ const RegisterScreen: React.FC = () => {
         buttonStyle={styles.backButtonStyle}
       />
     </Container>
+  
+    
   );
 };
 
@@ -137,5 +146,7 @@ const ErrorText = styled.Text`
   text-align: center;
   margin-bottom: 10px;
 `;
+
+
 
 export default RegisterScreen; 
