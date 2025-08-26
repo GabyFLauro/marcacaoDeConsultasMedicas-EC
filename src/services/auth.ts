@@ -8,12 +8,22 @@ const STORAGE_KEYS = {
   REGISTERED_USERS: '@MedicalApp:registeredUsers',
 };
 
+// ⚠️ DADOS MOCKADOS - MANTIDOS APENAS PARA COMPATIBILIDADE COM COMPONENTES ANTIGOS
+// TODO: Remover quando todos os componentes estiverem usando authApiService
 
-// DADOS MOCKADOS REMOVIDOS - Comentário explicativo
 // Médicos mockados (DEPRECATED - usar authApiService.getAllDoctors())
 const mockDoctors = [
   // Dados removidos - agora vêm da API
 ];
+
+// Admin mockado (DEPRECATED - usar authApiService)
+const mockAdmin = {
+  id: 'admin',
+  name: 'Administrador',
+  email: 'admin@example.com',
+  role: 'admin' as const,
+  image: 'https://randomuser.me/api/portraits/men/3.jpg',
+};
 
 // Lista de usuários cadastrados (pacientes)
 let registeredUsers: (User & { password: string })[] = [];
@@ -118,9 +128,9 @@ export const authService = {
   },
 
   async getAllDoctors(): Promise<User[]> {
-  // DEPRECIADO: Use authApiService.getAllDoctors() instead
-  return [];
-},
+    // DEPRECATED: Use authApiService.getAllDoctors() instead
+    return [];
+  },
 
   async getPatients(): Promise<User[]> {
     return registeredUsers;
@@ -138,4 +148,3 @@ export const authService = {
     }
   },
 }; 
-

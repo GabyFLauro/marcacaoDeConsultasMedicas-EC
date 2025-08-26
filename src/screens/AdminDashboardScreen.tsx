@@ -9,6 +9,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { RootStackParamList } from '../types/navigation';
 import theme from '../styles/theme';
 import Header from '../components/Header';
+import UserManagement from '../components/UserManagement';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type AdminDashboardScreenProps = {
@@ -65,6 +66,7 @@ const AdminDashboardScreen: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'appointments' | 'users'>('appointments');
 
   const loadData = async () => {
     try {
@@ -120,21 +122,25 @@ const AdminDashboardScreen: React.FC = () => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Title>Painel Administrativo</Title>
 
-        <Button
-          title="Gerenciar Usuários"
-          onPress={() => navigation.navigate('UserManagement')}
-          containerStyle={styles.button as ViewStyle}
-          buttonStyle={styles.buttonStyle}
-        />
+        {/* Abas de navegação */}
+        <TabContainer>
+          <TabButton 
+            active={activeTab === 'appointments'} 
+            onPress={() => setActiveTab('appointments')}
+          >
+            <TabText active={activeTab === 'appointments'}>Consultas</TabText>
+          </TabButton>
+          <TabButton 
+            active={activeTab === 'users'} 
+            onPress={() => setActiveTab('users')}
+          >
+            <TabText active={activeTab === 'users'}>Usuários</TabText>
+          </TabButton>
+        </TabContainer>
 
-        <Button
-          title="Meu Perfil"
-          onPress={() => navigation.navigate('Profile')}
-          containerStyle={styles.button as ViewStyle}
-          buttonStyle={styles.buttonStyle}
-        />
-
-        <SectionTitle>Últimas Consultas</SectionTitle>
+        {activeTab === 'appointments' ? (
+          <>
+            <SectionTitle>Últimas Consultas</SectionTitle>
         {loading ? (
           <LoadingText>Carregando dados...</LoadingText>
         ) : appointments.length === 0 ? (
@@ -177,13 +183,10 @@ const AdminDashboardScreen: React.FC = () => {
             </AppointmentCard>
           ))
         )}
-
-        <Button
-          title="Sair"
-          onPress={signOut}
-          containerStyle={styles.button as ViewStyle}
-          buttonStyle={styles.logoutButton}
-        />
+          </>
+        ) : (
+          <UserManagement onSignOut={signOut} />
+        )}
       </ScrollView>
     </Container>
   );
@@ -192,6 +195,8 @@ const AdminDashboardScreen: React.FC = () => {
 const styles = {
   scrollContent: {
     padding: 20,
+    paddingBottom: 40,
+    flexGrow: 1,
   },
   button: {
     marginBottom: 20,
@@ -237,6 +242,7 @@ const styles = {
 const Container = styled.View`
   flex: 1;
   background-color: ${theme.colors.background};
+  position: relative;
 `;
 
 const Title = styled.Text`
@@ -298,56 +304,6 @@ const ButtonContainer = styled.View`
   margin-top: 8px;
 `;
 
-// IMPORTAÇÕES - Adicionar no topo do arquivo
-import UserManagement from '../components/UserManagement';
-
-// ESTADO - Adicionar novo estado para controlar abas
-const [activeTab, setActiveTab] = useState<'appointments' | 'users'>('appointments');
-
-// JSX - Substituir a seção após o título por:
-return (
-  <Container>
-    <Header />
-    <ScrollView contentContainerStyle={styles.scrollContent}>
-      <Title>Painel Administrativo</Title>
-
-      {/* NOVO - Abas de navegação */}
-      <TabContainer>
-        <TabButton 
-          active={activeTab === 'appointments'} 
-          onPress={() => setActiveTab('appointments')}
-        >
-          <TabText active={activeTab === 'appointments'}>Consultas</TabText>
-        </TabButton>
-        <TabButton 
-          active={activeTab === 'users'} 
-          onPress={() => setActiveTab('users')}
-        >
-          <TabText active={activeTab === 'users'}>Usuários</TabText>
-        </TabButton>
-      </TabContainer>
-
-      {/* CONTEÚDO CONDICIONAL baseado na aba ativa */}
-      {activeTab === 'appointments' ? (
-        <>
-          <SectionTitle>Últimas Consultas</SectionTitle>
-          {/* ... código existente das consultas ... */}
-        </>
-      ) : (
-        <UserManagement />
-      )}
-
-      <Button
-        title="Sair"
-        onPress={signOut}
-        containerStyle={styles.button as ViewStyle}
-        buttonStyle={styles.logoutButton}
-      />
-    </ScrollView>
-  </Container>
-);
-
-// STYLED COMPONENTS - Adicionar no final do arquivo
 const TabContainer = styled.View`
   flex-direction: row;
   background-color: ${theme.colors.surface};
