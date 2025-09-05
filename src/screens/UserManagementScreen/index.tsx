@@ -2,29 +2,21 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView, ViewStyle, TextStyle } from 'react-native';
 import { Button, ListItem, Text } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
-import { RootStackParamList } from '../types/navigation';
-import theme from '../styles/theme';
-import Header from '../components/Header';
+import { RootStackParamList } from '../../types/navigation';
+import theme from '../../styles/theme';
+import Header from '../../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { styles } from './styles';
+import { User } from './interfaces/users';
+import { StyledProps } from './interfaces/styledprops';
 
 type UserManagementScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'UserManagement'>;
 };
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: 'admin' | 'doctor' | 'patient';
-}
-
-interface StyledProps {
-  role: string;
-}
 
 const UserManagementScreen: React.FC = () => {
   const { user } = useAuth();
@@ -144,45 +136,6 @@ const UserManagementScreen: React.FC = () => {
   );
 };
 
-const styles = {
-  scrollContent: {
-    padding: 20,
-  },
-  button: {
-    marginBottom: 20,
-    width: '100%',
-  },
-  buttonStyle: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: 12,
-  },
-  backButton: {
-    backgroundColor: theme.colors.secondary,
-    paddingVertical: 12,
-  },
-  actionButton: {
-    marginTop: 8,
-    width: '48%',
-  },
-  editButton: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: 8,
-  },
-  deleteButton: {
-    backgroundColor: theme.colors.error,
-    paddingVertical: 8,
-  },
-  userName: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: theme.colors.text,
-  },
-  userEmail: {
-    fontSize: 14,
-    color: theme.colors.text,
-    marginTop: 4,
-  },
-};
 
 const Container = styled.View`
   flex: 1;

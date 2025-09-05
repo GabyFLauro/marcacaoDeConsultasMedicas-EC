@@ -2,40 +2,24 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView, ViewStyle } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigation';
-import theme from '../styles/theme';
-import Header from '../components/Header';
-import DoctorList from '../components/DoctorList';
-import TimeSlotList from '../components/TimeSlotList';
+import { RootStackParamList } from '../../types/navigation';
+import theme from '../../styles/theme';
+import Header from '../../components/Header';
+import DoctorList from '../../components/DoctorList';
+import TimeSlotList from '../../components/TimeSlotList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { authApiService } from '../services/authApi';
-import { User } from '../types/auth';
+import { authApiService } from '../../services/authApi';
+import { User } from '../../types/auth';
+import { styles } from './styles';
+import { Appointment } from './interfaces/appointments';
+import { Doctor } from './interfaces/doctors';
 
 type CreateAppointmentScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'CreateAppointment'>;
 };
-
-interface Appointment {
-  id: string;
-  patientId: string;
-  patientName: string;
-  doctorId: string;
-  doctorName: string;
-  date: string;
-  time: string;
-  specialty: string;
-  status: 'pending' | 'confirmed' | 'cancelled';
-}
-
-interface Doctor {
-  id: string;
-  name: string;
-  specialty: string;
-  image: string;
-}
 
 // Médicos agora vêm da API através do AppointmentForm
 
@@ -186,27 +170,6 @@ const CreateAppointmentScreen: React.FC = () => {
       </ScrollView>
     </Container>
   );
-};
-
-const styles = {
-  scrollContent: {
-    padding: 20,
-  },
-  input: {
-    marginBottom: 15,
-  },
-  button: {
-    marginTop: 10,
-    width: '100%',
-  },
-  buttonStyle: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: 12,
-  },
-  cancelButton: {
-    backgroundColor: theme.colors.secondary,
-    paddingVertical: 12,
-  },
 };
 
 const Container = styled.View`

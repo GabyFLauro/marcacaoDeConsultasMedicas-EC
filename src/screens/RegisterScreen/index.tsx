@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { Input, Button, Text } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
-import theme from '../styles/theme';
+import { useAuth } from '../../contexts/AuthContext';
+import theme from '../../styles/theme';
 import { ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigation';
+import { RootStackParamList } from '../../types/navigation';
+import { styles } from './styles';
 
 type RegisterScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Register'>;
@@ -116,28 +117,6 @@ const RegisterScreen: React.FC = () => {
       />
     </Container>
   );
-};
-
-const styles = {
-  input: {
-    marginBottom: 15,
-  },
-  button: {
-    marginTop: 10,
-    width: '100%',
-  },
-  buttonStyle: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: 12,
-  },
-  backButton: {
-    marginTop: 10,
-    width: '100%',
-  },
-  backButtonStyle: {
-    backgroundColor: theme.colors.secondary,
-    paddingVertical: 12,
-  },
 };
 
 const Container = styled.View`

@@ -2,34 +2,22 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView, ViewStyle, TextStyle } from 'react-native';
 import { Button, ListItem, Text } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
-import { RootStackParamList } from '../types/navigation';
-import theme from '../styles/theme';
-import Header from '../components/Header';
+import { RootStackParamList } from '../../types/navigation';
+import theme from '../../styles/theme';
+import Header from '../../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { styles } from './styles';
+import { Appointment } from './interfaces/appointments';
+import { StyledProps } from './interfaces/styledprops';
 
 type DoctorDashboardScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'DoctorDashboard'>;
 };
 
-interface Appointment {
-  id: string;
-  patientId: string;
-  patientName: string;
-  doctorId: string;
-  doctorName: string;
-  date: string;
-  time: string;
-  specialty: string;
-  status: 'pending' | 'confirmed' | 'cancelled';
-}
-
-interface StyledProps {
-  status: string;
-}
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -169,50 +157,6 @@ const DoctorDashboardScreen: React.FC = () => {
   );
 };
 
-const styles = {
-  scrollContent: {
-    padding: 20,
-  },
-  button: {
-    marginBottom: 20,
-    width: '100%',
-  },
-  buttonStyle: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: 12,
-  },
-  logoutButton: {
-    backgroundColor: theme.colors.error,
-    paddingVertical: 12,
-  },
-  actionButton: {
-    marginTop: 8,
-    width: '48%',
-  },
-  confirmButton: {
-    backgroundColor: theme.colors.success,
-    paddingVertical: 8,
-  },
-  cancelButton: {
-    backgroundColor: theme.colors.error,
-    paddingVertical: 8,
-  },
-  dateTime: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.colors.text,
-  },
-  patientName: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.colors.text,
-  },
-  specialty: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: theme.colors.text,
-  },
-};
 
 const Container = styled.View`
   flex: 1;

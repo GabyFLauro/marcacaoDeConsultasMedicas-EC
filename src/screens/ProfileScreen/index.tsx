@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { Button, ListItem } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigation';
-import theme from '../styles/theme';
-import Header from '../components/Header';
+import { RootStackParamList } from '../../types/navigation';
+import theme from '../../styles/theme';
+import Header from '../../components/Header';
 import { ViewStyle } from 'react-native';
+import { styles } from './styles';
 
 type ProfileScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Profile'>;
@@ -65,24 +66,6 @@ const ProfileScreen: React.FC = () => {
       </ScrollView>
     </Container>
   );
-};
-
-const styles = {
-  scrollContent: {
-    padding: 20,
-  },
-  button: {
-    marginBottom: 20,
-    width: '100%',
-  },
-  buttonStyle: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: 12,
-  },
-  logoutButton: {
-    backgroundColor: theme.colors.error,
-    paddingVertical: 12,
-  },
 };
 
 const Container = styled.View`
